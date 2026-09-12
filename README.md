@@ -1,36 +1,339 @@
-# SQL-Exploratory-Data-Analysis-World-Tech-Layoff
-- This repository explores the world Tech Layoff dataset and tries to identify trends and patterns.
+# Global Tech Layoffs — Exploratory Data Analysis with MySQL
 
-# Data
-- The dataset for this exercise is the cleaned dataset from the SQL data cleaning project which can be obtained [here](Cleaned%20dataset.csv)
-- The dataset has `9 Columns` and `1001 Rows`.
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
+![Tableau](https://img.shields.io/badge/Tableau-E97627?style=flat&logo=tableau&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-Data%20Analysis-blue?style=flat)
+![GitHub](https://img.shields.io/badge/GitHub-Portfolio-181717?style=flat&logo=github)
 
-# TOOLS
+## 📌 Project Overview
+
+This project analyzes reported technology layoffs across companies, industries, locations, funding stages and time.
+
+The goal is to use **MySQL and SQL** to explore patterns in workforce reductions, identify companies and industries most affected, analyze changes over time and translate the results into meaningful business insights.
+
+Rather than focusing only on writing SQL queries, this project follows an analytical workflow:
+
+> **Data validation → Exploratory analysis → Advanced SQL → Insights → Business interpretation → Visualization**
+
+
+---
+
+## 🎯 Business Objective
+
+Technology layoffs can vary significantly by company, industry, location, funding stage and period.
+
+This analysis aims to answer questions such as:
+
+- How have reported tech layoffs changed over time?
+- Which companies experienced the largest reported layoffs?
+- Which industries were most affected?
+- Which countries and cities experienced the greatest number of reported layoffs?
+- Which funding stages experienced the largest workforce reductions?
+- Which companies experienced the largest layoffs in each year?
+- How do absolute layoffs compare with the percentage of the workforce affected?
+- What patterns can be observed in company funding and reported layoffs?
+- What limitations should be considered when interpreting the results?
+
+---
+
+# 📊 Dataset
+
+The dataset contains reported technology layoff events across companies and locations.
+
+### Dataset size
+
+- **Records:** 1,000
+- **Columns:** 9
+- **Geographic coverage:** Global
+- **Time period:** 
+
+The dataset used in this project is a cleaned version of the original technology layoffs dataset.
+
+> **Important:** All key statistics and date ranges presented in this README are being validated directly against the database rather than manually assumed from the source file.
+
+---
+
+# 🗂️ Data Dictionary
+
+| Column | Description |
+|---|---|
+| `company` | Name of the company reporting the layoff |
+| `location` / `city` | Geographic location associated with the layoff |
+| `country` | Country associated with the company/event |
+| `total_laid_off` | Reported number of employees laid off |
+| `date` | Date associated with the reported layoff |
+| `percentage_laid_off` | Reported percentage of the workforce affected |
+| `industry` | Industry/category of the company |
+| `stage` | Company funding/business stage |
+| `funds_raised` | Reported funding raised by the company |
+
+> **Note:** Column names and definitions are documented based on the structure of the dataset. Further validation of the dataset's grain and field definitions is performed during the data-quality stage.
+
+---
+
+# 🧰 Tools & Technologies
+
+### Database & SQL
 - MySQL
-- Tableau Public
+- MySQL Workbench
 
-# APPROACH
-- Determine basic statistics like the maximum, minimum and average laid off for the whole dataset, by country and by City for the United states to better understand the distribution of the dataset.
-- Determine the total laid off by company in general and in the US only.
-- Determine the top 5 companies by total funds raised in general and in the Us only.
-- Explore the date range of the layoffs.
-- Explore the total laid off per year and per month.
-- Determine the fundsraised by month, by industry,by company and by year.
-- Determine the total laid off by stage,determine the company in the Post IPO stage with the highest number of layoffs.
-- Determine the rolling totals for each month and year of the total laid off.
-- Create a rolling sum month by month using a CTE.
-- Determine the top 5 total laid off per company per year.
+### Visualization
+- Tableau
 
-# KEY FINDINGS
-- `Intel` had the highest number of lay_offs at `43,115` while `705` out of the total `1000` companies did not layoff anyone.
-- `Netflix`,`Meta`,`Uber`,`Tesla`and `Rivian` raised the most funds generally in the USA and in general.
-- The layoffs happened between 11th March 2025 and 15th August 2025. This could be attributed to the onset of Covid19 in 2020.
-- The year `2023` has the highest number of layoffs at `264,220` while `2021` has the lowest number of layoffs at `15,823`.
-- The month of `January` has the highest number of layoffs at `133,661` while `September` has the least at `15,394`.
-- The highest funds raised was in 2022 a total sum of `1,015,409`.The month of June had the highest total funds raised at `401,927`.Transportation as industry raised the highest funds at `551,546` while recruiting raised the lowest funds at `4,077`. There are two data points in the dataset whose industry is not possible to determine however the two raised an insiginificant amount at `51`. Netflix had the highest total funds raised at `487,600`. A total of `318` companies did not raise any funds.
-- Companies with the stage at Post IPO(Initial Public Offering) have the highest number of lay offs at `444,406` while those in the seed stage have the least number of layoffs at `2,221`. Intel, Microsoft, Amazon, Meta and Tesla lead in the companies with the highest number of layoffs in the post ipo stage.
+### Version Control
+- Git
+- GitHub
 
-# HOW TO RUN
-- Open the MySQL workbench and create a new SQL tab for executing queries.
-- Execute the following [SQL Queries](SQL-Exploratory-Data-Analysis-World-Tech-Layoff.sql).
-- See the Tableau Dashboard [here](https://public.tableau.com/authoring/SQL_Exploratory_Data_Analysis/Sheet1#1)
+---
+
+# 🔍 Analytical Approach
+
+The project follows a structured data-analysis workflow.
+
+## 1. Data Understanding
+
+Before performing analysis, I examine the structure and characteristics of the dataset.
+
+Questions include:
+
+- How many records are available?
+- How many unique companies are represented?
+- How many countries and industries are represented?
+- What is the date range?
+- What is the grain of the dataset?
+- Which columns contain missing values?
+- Are there potential duplicate records?
+- Which fields contain zero values?
+
+---
+
+## 2. Data Quality Checks
+
+The dataset is evaluated for:
+
+- Missing values
+- Duplicate records
+- NULL values
+- Zero values
+- Invalid or unexpected values
+- Date consistency
+- Data-type consistency
+- Potential inconsistencies in categorical fields
+
+The objective is to understand the quality and limitations of the data before drawing conclusions.
+
+---
+
+## 3. Exploratory Data Analysis
+
+The analysis examines:
+
+### Layoff Distribution
+
+- Minimum reported layoffs
+- Maximum reported layoffs
+- Average reported layoffs
+- Distribution of layoff events
+
+### Company Analysis
+
+- Total reported layoffs by company
+- Companies with the highest reported layoffs
+- Companies with zero reported layoffs
+- Annual company rankings
+
+### Geographic Analysis
+
+- Reported layoffs by country
+- Reported layoffs by city
+- Geographic concentration of layoffs
+
+### Industry Analysis
+
+- Reported layoffs by industry
+- Industry-level trends
+- Industries with the highest and lowest reported layoffs
+
+### Time Analysis
+
+- Earliest and latest reported layoff dates
+- Layoffs by year
+- Layoffs by year-month
+- Monthly trends
+- Cumulative layoffs over time
+
+### Funding Analysis
+
+- Reported funding by company
+- Funding by industry
+- Funding by year
+- Funding by funding stage
+- Companies with no reported funding
+
+---
+
+# 🧠 Advanced SQL Analysis
+
+The project demonstrates progressively more advanced SQL techniques.
+
+### Core SQL
+
+- `SELECT`
+- `WHERE`
+- `ORDER BY`
+- `DISTINCT`
+- `LIMIT`
+- `GROUP BY`
+- `HAVING`
+
+### Aggregate Functions
+
+- `COUNT()`
+- `SUM()`
+- `AVG()`
+- `MIN()`
+- `MAX()`
+
+### Conditional Logic
+
+- `CASE`
+- Conditional aggregation
+
+### Date Analysis
+
+- `YEAR()`
+- `MONTH()`
+- `DATE_FORMAT()`
+- Date-based grouping
+
+### Advanced SQL
+
+- Common Table Expressions (`CTEs`)
+- Subqueries
+- Window functions
+- `DENSE_RANK()`
+- `RANK()`
+- `ROW_NUMBER()`
+- `LAG()`
+- `LEAD()`
+- Running totals
+- Year-over-year analysis
+
+---
+
+# 📈 Key Analyses
+
+## 1. Layoffs Over Time
+
+I analyze the number of reported layoffs by year and year-month to identify periods of increased or decreased workforce reductions.
+
+The analysis uses MySQL date functions and window functions to calculate cumulative trends.
+
+**Key finding:**
+
+
+
+---
+
+## 2. Companies with the Highest Reported Layoffs
+
+Companies are ranked based on the cumulative number of reported layoffs represented in the dataset.
+
+**Key finding:**
+
+
+
+---
+
+## 3. Layoffs by Industry
+
+The analysis compares reported layoffs across industries to determine where workforce reductions were most concentrated.
+
+**Key finding:**
+
+
+
+---
+
+## 4. Geographic Distribution
+
+Layoffs are analyzed by country and city to identify geographic patterns.
+
+**Key finding:**
+
+
+
+---
+
+## 5. Funding Stage Analysis
+
+The analysis examines reported layoffs across different company funding/business stages.
+
+**Key finding:**
+
+
+
+---
+
+## 6. Percentage of Workforce Affected
+
+Absolute layoffs do not tell the entire story.
+
+A company laying off 5,000 employees may be very different from a company laying off 5,000 employees out of a much smaller workforce.
+
+Therefore, the analysis also considers:
+
+`percentage_laid_off`
+
+This provides a relative measure of the severity of individual layoff events.
+
+**Key finding:**
+
+
+---
+
+# 📊 Advanced Analysis: Annual Company Rankings
+
+One of the advanced SQL analyses ranks the companies with the highest reported layoffs for each year.
+
+This is implemented using:
+
+- CTEs
+- Aggregation
+- `DENSE_RANK()`
+- `PARTITION BY`
+
+Example:
+
+```sql
+WITH company_year AS (
+    SELECT
+        company,
+        YEAR(date) AS year,
+        SUM(total_laid_off) AS total_laid_off
+    FROM layoffs
+    GROUP BY
+        company,
+        YEAR(date)
+),
+
+ranked_companies AS (
+    SELECT
+        company,
+        year,
+        total_laid_off,
+        DENSE_RANK() OVER (
+            PARTITION BY year
+            ORDER BY total_laid_off DESC
+        ) AS ranking
+    FROM company_year
+)
+
+SELECT
+    company,
+    year,
+    total_laid_off,
+    ranking
+FROM ranked_companies
+WHERE ranking <= 5
+ORDER BY year, ranking;
